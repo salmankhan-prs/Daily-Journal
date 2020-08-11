@@ -4,8 +4,17 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 var _ = require('lodash');
+const mongoose = require('mongoose');
+mongoose.connect("mongodb+srv://admin-salman:salman786@cluster0.ovgok.mongodb.net/journalDB?retryWrites=true&w=majority",{useNewUrlParser: true, useUnifiedTopology: true} );
 
-let posts=[];
+
+
+
+const postSchema ={ 
+  title:String,
+  content:String,
+};
+const Post=mongoose.model("Post",postSchema);
 
 const homeStartingContent = "Here you can see all Daily tech  journal .";
 const aboutContent = "This website created as project. To know more please click on the below link";
@@ -19,12 +28,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 
-
 app.get('/', function(req, res) {
-
+Post.find({},function(err,posts) {
   res.render("home",{demodata:homeStartingContent,
-  posts:posts
-  });
+    posts:posts
+    });
+})
+  
 })
 app.get('/about', function(req, res) {
   res.render("about",{demoAboutContent:aboutContent});
@@ -39,24 +49,35 @@ app.get('/compose', function(req, res) {
 app.post('/compose', function(req, res) {
   // let publish=req.body.publish;
   // let postBody=req.body.postBody;
-  const post={
+  const post=new Post({
   title:req.body.publish,
    content:req.body.postBody
-  };
-  posts.push(post);
-  res.redirect("/");
+  });
+  post.save(function(err){
+    if(!err){
+      res.redirect("/");
+    }
+  });
+ 
   
 });
-app.get('/posts/:postName',function(req,res){
-  reqiredvalue=_.lowerCase(req.params.postName);
-  posts.forEach(function(post){
-   stortedvalue=post.title;
-   stortedvalue=_.lowerCase(stortedvalue)
 
-   if(stortedvalue===reqiredvalue){
-    res.render('post',{title:post.title,content:post.content})
-   }
+app.get('/posts/:postId',function(req,res){
+  requestedPostId=(req.params.postId);
+  
+  
+  Post.findOne({_id: requestedPostId}, function(err, post){
+
+    res.render("post", {
+ 
+      title: post.title,
+ 
+      content: post.content
+ 
+    });
+ 
   });
+ 
  
 })
 

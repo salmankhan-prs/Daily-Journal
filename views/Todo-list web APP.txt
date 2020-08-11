@@ -1,0 +1,21 @@
+Todo-list web APP 
+1.front-end
+   A.Html 
+   B.CSS 
+   c.javascript
+2.back-end
+    A.NodeJs
+    
+3.Database
+   A.mongoDB
+
+4.Libaries
+  A.moongose
+  B.jquery
+  C.Express
+  D.EJS
+  E.loadAsh
+5.hosting-server
+  1.heroKU
+6.Database-server
+  1.Atlas(MongoDB) using AWS
