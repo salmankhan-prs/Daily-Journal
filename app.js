@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 var _ = require('lodash');
 const mongoose = require('mongoose');
-mongoose.connect("mongodb+srv://admin-salman:salman786@cluster0.ovgok.mongodb.net/journalDB?retryWrites=true&w=majority",{useNewUrlParser: true, useUnifiedTopology: true} );
+mongoose.connect("mongodb+srv://user-name:<passsword>@cluster0.ovgok.mongodb.net/journalDB?retryWrites=true&w=majority",{useNewUrlParser: true, useUnifiedTopology: true} );
 
 
 
